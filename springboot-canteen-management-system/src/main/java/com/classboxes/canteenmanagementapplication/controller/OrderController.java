@@ -52,6 +52,8 @@ public class OrderController {
 	        order.setAmount(orderDetails.getAmount());
 	        order.setCustomerId(orderDetails.getCustomerId());
 	        order.setStatus(orderDetails.getStatus());
+	        order.setOrderDate(orderDetails.getOrderDate());
+	        order.setComments(orderDetails.getComments());
 	        
 	        final Order updatedOrder = orderRepository.save(order);
 	        return ResponseEntity.ok(updatedOrder);

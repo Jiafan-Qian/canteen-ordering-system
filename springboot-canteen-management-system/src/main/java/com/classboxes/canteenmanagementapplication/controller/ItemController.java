@@ -1,5 +1,6 @@
 package com.classboxes.canteenmanagementapplication.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,10 +17,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.classboxes.canteenmanagementapplication.exception.ResourceNotFoundException;
-import com.classboxes.canteenmanagementapplication.model.Customer;
 import com.classboxes.canteenmanagementapplication.model.Item;
 import com.classboxes.canteenmanagementapplication.repository.ItemRepository;
 
@@ -28,45 +30,53 @@ import com.classboxes.canteenmanagementapplication.repository.ItemRepository;
 @RestController 
 @RequestMapping("/api/v1")
 public class ItemController {
+	
 	@Autowired
 	private ItemRepository itemRepository;
 	
+	//Get all items to create a menu
 	@GetMapping("/menu")
 	public List<Item> getMenu()
 	{
 		return itemRepository.findAll();
 	}
 	
-	
+	//Add a new item in menu
 	@PostMapping("/menu")
 	public Item createItem(@Valid @RequestBody Item item)
 	{
+		
 		return itemRepository.save(item);
 	}
 	
-	@GetMapping("/menu/{id}")
-    public ResponseEntity<Item> getItemById(@PathVariable(value = "id") Long itemId)
+	
+	@GetMapping("/menu/{itemId}")
+    public ResponseEntity<Item> getItemById(@PathVariable(value = "itemId") Long itemId)
         throws ResourceNotFoundException {
         Item item = itemRepository.findById(itemId)
           .orElseThrow(() -> new ResourceNotFoundException("Item not found for this id :: " + itemId));
         return ResponseEntity.ok().body(item);
     }
 	
-	@PutMapping("/menu/{id}")
-    public ResponseEntity<Item> updateItem(@PathVariable(value = "id") Long itemId,
-         @Valid @RequestBody Item itemDetails) throws ResourceNotFoundException {
+	
+	@PutMapping("/menu/{itemId}")
+    public ResponseEntity<Item> updateItem(@PathVariable(value = "itemId") Long itemId,
+         @Valid @RequestBody Item itemDetails) throws ResourceNotFoundException
+	{
         Item item = itemRepository.findById(itemId)
         .orElseThrow(() -> new ResourceNotFoundException("Item not found for this id :: " + itemId));
 
         item.setItemName(itemDetails.getItemName());
         item.setItemPrice(itemDetails.getItemPrice());
+        item.setDescription(itemDetails.getDescription());
+  
         
         final Item updatedItem = itemRepository.save(item);
         return ResponseEntity.ok(updatedItem);
     }
 	
-	@DeleteMapping("/menu/{id}")
-    public Map<String, Boolean> deleteItem(@PathVariable(value = "id") Long itemId)
+	@DeleteMapping("/menu/{itemId}")
+    public Map<String, Boolean> deleteItem(@PathVariable(value = "itemId") Long itemId)
          throws ResourceNotFoundException {
         Item item = itemRepository.findById(itemId)
        .orElseThrow(() -> new ResourceNotFoundException("Item not found for this id :: " + itemId));

@@ -43,7 +43,7 @@ public class VendorController {
     public ResponseEntity<Vendor> getVendorById(@PathVariable(value = "id") Long vendorId)
         throws ResourceNotFoundException {
         Vendor vendor = vendorRepository.findById(vendorId)
-          .orElseThrow(() -> new ResourceNotFoundException("Customer not found for this id :: " + vendorId));
+          .orElseThrow(() -> new ResourceNotFoundException("Vendor not found for this id :: " + vendorId));
         return ResponseEntity.ok().body(vendor);
 	}
 }
