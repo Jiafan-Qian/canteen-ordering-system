@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="order_details")
-public class OrderDetails extends AuditModel{
+public class OrderDetails{
 	
 	@Id
 	private Long itemId;

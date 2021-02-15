@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "orders")
-public class Order extends AuditModel{
+public class Order{
 	
 	@Id
 	@Column(name="order_id")
@@ -33,13 +33,16 @@ public class Order extends AuditModel{
 	
 	@Column(name = "comments")
 	private String comments;
+	
+	@Column(name = "prepare_time")
+	private Long prepTime;
 
 	public Order() {
 		super();
 	}
 
 	
-	public Order(String orderId, Long customerId, double amount, String status, Date orderDate, String comments) {
+	public Order(String orderId, Long customerId, double amount, String status, Date orderDate, String comments, Long prepTime) {
 		super();
 		this.orderId = orderId;
 		this.customerId = customerId;
@@ -47,9 +50,20 @@ public class Order extends AuditModel{
 		this.status = status;
 		this.orderDate = orderDate;
 		this.comments = comments;
+		this.prepTime = prepTime;
 	}
 
 	
+
+	public Long getPrepTime() {
+		return prepTime;
+	}
+
+
+	public void setPrepTime(Long prepTime) {
+		this.prepTime = prepTime;
+	}
+
 
 	public String getComments() {
 		return comments;
@@ -107,8 +121,10 @@ public class Order extends AuditModel{
 	@Override
 	public String toString() {
 		return "Order [orderId=" + orderId + ", customerId=" + customerId + ", amount=" + amount + ", status=" + status
-				+ ", orderDate=" + orderDate + ", comments=" + comments + "]";
+				+ ", orderDate=" + orderDate + ", comments=" + comments + ", prepTime=" + prepTime + "]";
 	}
+
+	
 
 
 	

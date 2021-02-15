@@ -12,7 +12,7 @@ import javax.persistence.Table;
 public class Customer {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "custId", nullable = false)
 	private Long customerId;
 	
@@ -33,12 +33,30 @@ public class Customer {
 	
 	@Column(name = "wallet_balance", nullable = false)
 	private double balance;
+	
+	@Column(name = "number_of_orders")
+	private long numberOfOrders;
 
 	public Customer() {
 		super();
 	}
+	
+	
 
-	public Customer(String firstName, String lastName, String email, String username, String password, double balance) {
+	public Customer(String firstName, String lastName, String email, String username, String password) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.username = username;
+		this.password = password;
+		this.balance = 0;
+		this.numberOfOrders = 0;
+	}
+
+
+
+	public Customer(String firstName, String lastName, String email, String username, String password, double balance, long numberOfOrders) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -46,9 +64,19 @@ public class Customer {
 		this.username = username;
 		this.password = password;
 		this.balance = balance;
+		this.numberOfOrders = numberOfOrders;
 	}
 
 
+	
+
+	public long getNumberOfOrders() {
+		return numberOfOrders;
+	}
+
+	public void setNumberOfOrders(long numberOfOrders) {
+		this.numberOfOrders = numberOfOrders;
+	}
 
 	public String getUsername() {
 		return username;
@@ -113,8 +141,11 @@ public class Customer {
 	@Override
 	public String toString() {
 		return "Customer [customerId=" + customerId + ", firstName=" + firstName + ", lastName=" + lastName + ", email="
-				+ email + ", username=" + username + ", password=" + password + ", balance=" + balance + "]";
+				+ email + ", username=" + username + ", password=" + password + ", balance=" + balance
+				+ ", numberOfOrders=" + numberOfOrders + "]";
 	}
+
+	
 
 	
 	
