@@ -100,11 +100,11 @@ public class ImageController {
 	}
 	
 	//delete image for corresponding itemId
-	@DeleteMapping("/menu/{itemId}/itemImages")
-    public ResponseEntity<?> deleteImage(@PathVariable(value = "itemId") Long itemId)
+	@DeleteMapping("/menu/{itemId}/itemImages/{imageId}")
+    public ResponseEntity<?> deleteImage(@PathVariable(value = "itemId") Long itemId, @PathVariable(value = "imageId") Long imageId)
          throws ResourceNotFoundException {
 	
-       return imageRepository.findByItem_ItemId(itemId).map(image -> {
+       return imageRepository.findByImageIdAndItem_ItemId(imageId, itemId).map(image -> {
     	 imageRepository.delete(image);
     	 return ResponseEntity.ok().build();
        })

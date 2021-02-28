@@ -5,6 +5,8 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -15,6 +17,9 @@ import javax.persistence.Table;
 public class Coupon {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long couponId;
+	
 	@Column(name = "coupon_code")
 	private String code;
 	
@@ -23,6 +28,9 @@ public class Coupon {
 	
 	@Column(name = "expire_date")
 	private Date expireDate;
+	
+	@Column(name = "coupon_value")
+	private double value;
 	
 	@Column(name = "order_id")
 	private String orderId;
@@ -34,14 +42,28 @@ public class Coupon {
 	public Coupon() {
 		super();
 	}
+	
 
-	public Coupon(String code, Date generateDate, Date expireDate, String orderId) {
+	public Coupon(String code, Date generateDate, Date expireDate, double value, String orderId) {
 		super();
 		this.code = code;
 		this.generateDate = generateDate;
 		this.expireDate = expireDate;
+		this.value = value;
 		this.orderId = orderId;
 	}
+
+	
+	
+	public Long getCouponId() {
+		return couponId;
+	}
+
+
+	public void setCouponId(Long couponId) {
+		this.couponId = couponId;
+	}
+
 
 	public String getCode() {
 		return code;
@@ -83,11 +105,27 @@ public class Coupon {
 		this.customer = customer;
 	}
 
+	
+	
+	public double getValue() {
+		return value;
+	}
+
+
+	public void setValue(double value) {
+		this.value = value;
+	}
+
+
 	@Override
 	public String toString() {
-		return "Coupon [code=" + code + ", generateDate=" + generateDate + ", expireDate=" + expireDate + ", orderId="
-				+ orderId + ", customer=" + customer + "]";
+		return "Coupon [couponId=" + couponId + ", code=" + code + ", generateDate=" + generateDate + ", expireDate="
+				+ expireDate + ", value=" + value + ", orderId=" + orderId + ", customer=" + customer + "]";
 	}
+
+
+	
+	
 	
 	
 

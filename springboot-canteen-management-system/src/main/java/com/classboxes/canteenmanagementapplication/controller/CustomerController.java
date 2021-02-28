@@ -50,6 +50,15 @@ public class CustomerController {
         return ResponseEntity.ok().body(customer);
     }
 	
+	//get a customer by username and email
+	@GetMapping("/customers/{username}/{email}")
+	public ResponseEntity<Customer> getCustomerByUsernameAndEmail(@PathVariable(value = "username") String username,
+			@PathVariable(value ="email") String email) throws ResourceNotFoundException {
+	        Customer customer = customerRepository.findByUsernameAndEmail(username, email)
+	          .orElseThrow(() -> new ResourceNotFoundException("Customer not found "));
+	        return ResponseEntity.ok().body(customer);
+	    }
+	
 	//update a customer
 	@PutMapping("/customers/{id}")
     public ResponseEntity<Customer> updateCustomer(@PathVariable(value = "id") Long customerId,
@@ -63,6 +72,7 @@ public class CustomerController {
         customer.setBalance(customerDetails.getBalance());
         customer.setUsername(customerDetails.getUsername());
         customer.setPassword(customerDetails.getPassword());
+        customer.setNumberOfOrders(customerDetails.getNumberOfOrders());
         
         final Customer updatedCustomer = customerRepository.save(customer);
         return ResponseEntity.ok(updatedCustomer);

@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.classboxes.canteenmanagementapplication.exception.ResourceNotFoundException;
 import com.classboxes.canteenmanagementapplication.model.Item;
 import com.classboxes.canteenmanagementapplication.repository.ItemRepository;
+import com.classboxes.canteenmanagementapplication.repository.VendorRepository;
 
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -34,11 +35,32 @@ public class ItemController {
 	@Autowired
 	private ItemRepository itemRepository;
 	
+	@Autowired
+	private VendorRepository vendorRepository;
+	
+	//get menu for corresponding vendor
+	@GetMapping("/vendors/{vendorId}/menu")
+	public List<Item> getMenuByVendorId(@PathVariable(value = "vendorId") Long vendorId)
+	{
+		return itemRepository.findByVendor_VendorId(vendorId);
+	}
+	
 	//Get all items to create a menu
 	@GetMapping("/menu")
 	public List<Item> getMenu()
 	{
 		return itemRepository.findAll();
+	}
+	
+	//Add a new item for corresponding vendor
+	@PostMapping("/vendors/{vendorId}/menu")
+	public Item saveItemByVendorId(@PathVariable(value = "vendorId") Long vendorId,
+			@Valid @RequestBody Item item) throws ResourceNotFoundException
+	{
+		return vendorRepository.findById(vendorId).map(vendor ->{
+			item.setVendor(vendor);
+			return itemRepository.save(item);
+		}).orElseThrow(() -> new ResourceNotFoundException("vendor not found"));
 	}
 	
 	//Add a new item in menu
@@ -68,22 +90,23 @@ public class ItemController {
 
         item.setItemName(itemDetails.getItemName());
         item.setItemPrice(itemDetails.getItemPrice());
-        item.setDescription(itemDetails.getDescription());
-  
+        item.setDescription(itemDetails.getDescription());  
         
         final Item updatedItem = itemRepository.save(item);
         return ResponseEntity.ok(updatedItem);
     }
 	
-	@DeleteMapping("/menu/{itemId}")
-    public Map<String, Boolean> deleteItem(@PathVariable(value = "itemId") Long itemId)
-         throws ResourceNotFoundException {
-        Item item = itemRepository.findById(itemId)
-       .orElseThrow(() -> new ResourceNotFoundException("Item not found for this id :: " + itemId));
-
-        itemRepository.delete(item);
-        Map<String, Boolean> response = new HashMap<>();
-        response.put("deleted", Boolean.TRUE);
-        return response;
-    }
+	//Delete an item according to itemId and vendorId
+	@DeleteMapping("/vendors/{vendorId}/menu/{itemId}")
+	public ResponseEntity<?> deleteItem(@PathVariable(value = "vendorId") Long vendorId, 
+			@PathVariable(value = "itemId") Long itemId)
+	throws ResourceNotFoundException
+	{
+		return itemRepository.findByItemIdAndVendor_VendorId(itemId, vendorId).map(item -> {
+			itemRepository.delete(item);
+		return ResponseEntity.ok().build();
+		}).orElseThrow(()->new ResourceNotFoundException("item not found"));
+	}
+	
+	
 }

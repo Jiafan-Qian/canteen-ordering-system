@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -58,6 +59,20 @@ public class OrderController {
 	        final Order updatedOrder = orderRepository.save(order);
 	        return ResponseEntity.ok(updatedOrder);
 	    }	
+	
+	
+	//delete order
+	@DeleteMapping("/orders/{orderId}")
+	public ResponseEntity<?> deleteOrder( 
+			@PathVariable(value = "orderId") String orderId)
+	throws ResourceNotFoundException
+	{
+		return orderRepository.findById(orderId).map(order -> {
+			orderRepository.delete(order);
+		return ResponseEntity.ok().build();
+		}).orElseThrow(()->new ResourceNotFoundException("order not found"));
+	}
+	
 	
 
 }

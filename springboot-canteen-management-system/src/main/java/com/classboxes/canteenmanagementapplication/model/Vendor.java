@@ -12,8 +12,8 @@ import javax.persistence.Table;
 public class Vendor {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "vendorId")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "vendor_id")
 	private Long vendorId;
 	
 	@Column(name = "first_name")
@@ -30,18 +30,44 @@ public class Vendor {
 	
 	@Column(name = "password")
 	private String password;
+	
+	@Column(name = "food_specialization")
+	private String foodSpecialization;
 
 	public Vendor() {
 		super();
 	}
 
-	public Vendor(String firstName, String lastName, String email, String username, String password) {
+	public Vendor(String firstName, String lastName, String email, String username, String password,
+			String foodSpecialization) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.username = username;
 		this.password = password;
+		this.foodSpecialization = foodSpecialization;
+	}
+	
+	
+	public Vendor(Long vendorId, String firstName, String lastName, String email, String username, String password,
+			String foodSpecialization) {
+		super();
+		this.vendorId = vendorId;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.username = username;
+		this.password = password;
+		this.foodSpecialization = foodSpecialization;
+	}
+
+	public String getFoodSpecialization() {
+		return foodSpecialization;
+	}
+
+	public void setFoodSpecialization(String foodSpecialization) {
+		this.foodSpecialization = foodSpecialization;
 	}
 
 	public Long getVendorId() {
@@ -95,8 +121,11 @@ public class Vendor {
 	@Override
 	public String toString() {
 		return "Vendor [vendorId=" + vendorId + ", firstName=" + firstName + ", lastName=" + lastName + ", email="
-				+ email + ", username=" + username + ", password=" + password + "]";
+				+ email + ", username=" + username + ", password=" + password + ", foodSpecialization="
+				+ foodSpecialization + "]";
 	}
+
+	
 	
 	
 	

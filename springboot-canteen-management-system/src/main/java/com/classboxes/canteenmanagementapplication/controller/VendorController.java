@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,6 +40,7 @@ public class VendorController {
 		return vendorRepository.findAll();
 	}
 
+	//Get vendor by id
 	@GetMapping("/vendors/{id}")
     public ResponseEntity<Vendor> getVendorById(@PathVariable(value = "id") Long vendorId)
         throws ResourceNotFoundException {
@@ -46,4 +48,32 @@ public class VendorController {
           .orElseThrow(() -> new ResourceNotFoundException("Vendor not found for this id :: " + vendorId));
         return ResponseEntity.ok().body(vendor);
 	}
+	
+	//Get vendor by username and email
+	@GetMapping("/vendors/{username}/{email}")
+	public ResponseEntity<Vendor> getVendorByUsernameAndEmail(@PathVariable(value = "username") String username,
+			@PathVariable(value = "email") String email) throws ResourceNotFoundException {
+	        Vendor vendor = vendorRepository.findByUsernameAndEmail(username, email)
+	          .orElseThrow(() -> new ResourceNotFoundException("Vendor not found " ));
+	        return ResponseEntity.ok().body(vendor);
+		}
+	
+	//update vendor
+	@PutMapping("/vendors/{id}")
+    public ResponseEntity<Vendor> updateVendor(@PathVariable(value = "id") Long vendorId,
+         @Valid @RequestBody Vendor vendorDetails) throws ResourceNotFoundException {
+        Vendor vendor = vendorRepository.findById(vendorId)
+        .orElseThrow(() -> new ResourceNotFoundException("Vendor not found for this id :: " + vendorId));
+
+        vendor.setEmail(vendorDetails.getEmail());
+        vendor.setLastName(vendorDetails.getLastName());
+        vendor.setFirstName(vendorDetails.getFirstName());
+        vendor.setUsername(vendorDetails.getUsername());
+        vendor.setPassword(vendorDetails.getPassword());
+        vendor.setFoodSpecialization(vendorDetails.getFoodSpecialization());
+        
+        final Vendor updatedVendor = vendorRepository.save(vendor);
+        return ResponseEntity.ok(updatedVendor);
+    }
+	
 }

@@ -5,12 +5,16 @@ import java.util.Arrays;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name="item_image")
@@ -30,8 +34,9 @@ public class Image {
 	@Column(name = "picByte", length = Integer.MAX_VALUE)
 	private byte[] picByte;
 	
-	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "itemId")
+	//@OnDelete(action = OnDeleteAction.CASCADE)
 	private Item item;
 
 	public Image() {

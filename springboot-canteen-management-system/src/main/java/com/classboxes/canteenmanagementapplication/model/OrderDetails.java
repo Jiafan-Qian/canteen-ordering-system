@@ -3,6 +3,8 @@ package com.classboxes.canteenmanagementapplication.model;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -13,6 +15,10 @@ import javax.persistence.Table;
 public class OrderDetails{
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long orderDetailsId;
+	
+	@Column(name = "item_id")
 	private Long itemId;
 	
 	@Column(name = "item_name", nullable = false)
@@ -27,13 +33,24 @@ public class OrderDetails{
 	@Column(name = "total_price")
 	private double totalPrice;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "order_id")
 	private Order order;
 
 	public OrderDetails() {
 		super();
 	}
+
+	
+	public Long getOrderDetailsId() {
+		return orderDetailsId;
+	}
+
+
+	public void setOrderDetailsId(Long orderDetailsId) {
+		this.orderDetailsId = orderDetailsId;
+	}
+
 
 	public String getItemName() {
 		return itemName;
@@ -76,10 +93,13 @@ public class OrderDetails{
 		this.totalPrice = totalPrice;
 	}
 
+	
+
 	@Override
 	public String toString() {
-		return "OrderedItem [itemId=" + itemId + ", itemName=" + itemName + ", itemPrice=" + itemPrice + ", quantity="
-				+ quantity + ", totalPrice=" + totalPrice + "]";
+		return "OrderDetails [orderDetailsId=" + orderDetailsId + ", itemId=" + itemId + ", itemName=" + itemName
+				+ ", itemPrice=" + itemPrice + ", quantity=" + quantity + ", totalPrice=" + totalPrice + ", order="
+				+ order + "]";
 	}
 
 	public Long getItemId() {

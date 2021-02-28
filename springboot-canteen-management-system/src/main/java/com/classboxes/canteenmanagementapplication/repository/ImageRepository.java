@@ -11,5 +11,6 @@ import com.classboxes.canteenmanagementapplication.model.Image;
 public interface ImageRepository extends JpaRepository<Image, Long>{
 	
 	Optional<Image> findByItem_ItemId(Long itemId);
+	Optional<Image> findByImageIdAndItem_ItemId(Long imageId, Long itemId);
 
 }

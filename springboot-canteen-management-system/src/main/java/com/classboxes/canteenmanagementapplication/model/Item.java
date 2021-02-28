@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -27,6 +29,10 @@ public class Item {
 	@Column(name = "item_description")
 	private String description;
 	
+	@ManyToOne(cascade = CascadeType.PERSIST)
+	@JoinColumn(name = "vendor_id")
+	private Vendor vendor;
+	
 	public Item() {
 		super();
 	}
@@ -44,6 +50,16 @@ public class Item {
 		return description;
 	}
 
+
+	
+	public Vendor getVendor() {
+		return vendor;
+	}
+
+
+	public void setVendor(Vendor vendor) {
+		this.vendor = vendor;
+	}
 
 
 	public void setDescription(String description) {
@@ -79,9 +95,11 @@ public class Item {
 
 	@Override
 	public String toString() {
-		return "Item [id=" + itemId + ", itemName=" + itemName + ", itemPrice=" + itemPrice + ", description=" + description
-				+ "]";
+		return "Item [itemId=" + itemId + ", itemName=" + itemName + ", itemPrice=" + itemPrice + ", description="
+				+ description + ", vendor=" + vendor + "]";
 	}
+
+
 
 
 	
