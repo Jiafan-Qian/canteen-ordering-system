@@ -29,7 +29,14 @@
                     <th>Password</th>
                     <td>{{vendor.password}}</td>
                 </tr>
+                <tr>
+                    <th>Food Specialization</th>
+                    <td>{{vendor.foodSpecialization}}</td>
+                </tr>
             </tbody>
         </table>
+        <button class="btn btn-primary" type="button" (click)="goUpdate()">Edit</button>
+        &nbsp;&nbsp;&nbsp;
         <button class="btn btn-primary" (click)="backToPortal()">Back to Portal</button>
+
 </div>
