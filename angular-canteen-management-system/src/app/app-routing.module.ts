@@ -8,6 +8,7 @@ import { CustomerPortalComponent } from './customer-portal/customer-portal.compo
 import { PlaceOrderComponent } from './customer-portal/place-order/place-order.component';
 import { ViewTransactionComponent } from './customer-portal/view-transaction/view-transaction.component';
 import { HomePageComponent } from './home-page/home-page.component';
+import { ForgetPasswordComponent } from './login/forget-password/forget-password.component';
 import { LoginComponent } from './login/login.component';
 import { MenuComponent } from './menu/menu.component';
 import { RegisterComponent } from './register/register.component';
@@ -15,6 +16,7 @@ import { CustomerListComponent } from './vendor-portal/customer-list/customer-li
 import { AddItemComponent } from './vendor-portal/update-menu/add-item/add-item.component';
 import { UpdateMenuComponent } from './vendor-portal/update-menu/update-menu.component';
 import { UpdateTransactionComponent } from './vendor-portal/update-transaction/update-transaction.component';
+import { UpdateVendorComponent } from './vendor-portal/vendor-details/update-vendor/update-vendor.component';
 import { VendorDetailsComponent } from './vendor-portal/vendor-details/vendor-details.component';
 import { VendorPortalComponent } from './vendor-portal/vendor-portal.component';
 
@@ -25,16 +27,18 @@ const routes: Routes = [
   {path: 'vendor/:id', component: VendorPortalComponent},
   {path: 'vendor/:id/customer-list', component:CustomerListComponent},
   {path: 'customer/:id', component: CustomerPortalComponent},
-  {path: '', component: HomePageComponent},
+  {path: '', component: LoginComponent},
   {path: 'customer/:id/details', component: CustomerDetailsComponent},
   {path: 'customer/:id/addmoney', component: AddMoneyComponent},
   {path: 'customer/:id/placeorder', component:PlaceOrderComponent},
   {path: 'customer/:id/transaction', component: ViewTransactionComponent},
-  {path: 'customer/:id/update', component: UpdateCustomerComponent},
+  {path: 'customer/:id/details/update', component: UpdateCustomerComponent},
   {path: 'vendor/:id/details', component: VendorDetailsComponent},
   {path: 'vendor/:id/transaction', component: UpdateTransactionComponent},
   {path: 'vendor/:id/updatemenu', component: UpdateMenuComponent},
   {path: 'vendor/:id/updatemenu/add', component: AddItemComponent},
+  {path: 'forget-password', component: ForgetPasswordComponent},
+  {path: 'vendor/:id/details/update', component: UpdateVendorComponent}
 ];
 
 @NgModule({
