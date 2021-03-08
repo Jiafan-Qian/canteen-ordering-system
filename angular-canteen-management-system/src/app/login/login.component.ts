@@ -90,8 +90,7 @@ export class LoginComponent implements OnInit {
                 this.currentVendor = vendor;
             }
           });
-        console.log(this.currentVendor);
-        console.log(this.currentVendor.vendorId);
+
         if (this.currentVendor == null)
           this.showErrorMessage = true;
         else
