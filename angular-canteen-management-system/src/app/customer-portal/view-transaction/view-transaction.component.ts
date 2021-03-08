@@ -16,6 +16,7 @@ export class ViewTransactionComponent implements OnInit {
   allOrders: Order[] = [];
   currentCustomerOrders: Order[] = [];
   currentCustomerCoupons: Coupon[] = [];
+  currentOrderCoupons: Coupon[] = [];
   orderDetails: OrderDetails[];
   custId: number;
 
@@ -54,6 +55,7 @@ export class ViewTransactionComponent implements OnInit {
 
   getDetails(orderId: string)
   {
+    //get orderDetails for specific orderId 
     this.orderDetails = [];
     for (var i=0; i<this.currentCustomerOrders.length; i++)
     {
@@ -64,7 +66,16 @@ export class ViewTransactionComponent implements OnInit {
         });
       }
     }
-    
+
+    //get Coupons attached to the current orderId
+    this.currentOrderCoupons = [];
+    for (var i=0; i<this.currentCustomerCoupons.length; i++)
+    {
+      if (this.currentCustomerCoupons[i].orderId == orderId)
+      {
+        this.currentOrderCoupons.push(this.currentCustomerCoupons[i]);
+      }
+    }
   }
 
   getColor(status: string)
