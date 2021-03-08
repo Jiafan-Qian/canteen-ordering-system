@@ -7,20 +7,23 @@
             <thead>
                 <tr>
                     <th>Order Id</th>
-                    <th>Total Amount</th>
+                    <th>Item Name</th>
+                    <th>Item Quantity</th>
                     <th>Status</th>
                     <th>Comments</th>
                     <th>Action</th>
+                    
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let order of allOrders">
-                    <td>{{order.orderId}}</td>
-                    <td>{{order.amount}}</td>
-                    <td>{{order.status}}</td>
-                    <td>{{order.comments}}</td>
+                <tr *ngFor="let orderDetail of orderDetails">
+                    <td>{{orderDetail.order.orderId}}</td>
+                    <td>{{orderDetail.itemName}}</td>
+                    <td>{{orderDetail.quantity}}</td>
+                    <td>{{orderDetail.status}}</td>
+                    <td>{{orderDetail.comments}}</td>
                     <td>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#changeStatus" (click)="getOrder(order)" [disabled]="!(order.status=='Order Placed')">Change Status</button>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#changeStatus" (click)="getOrderDetail(orderDetail)" [disabled]="!(orderDetail.status == 'Order Placed')">Change Status</button>
                     </td>
                 </tr>
             </tbody>
