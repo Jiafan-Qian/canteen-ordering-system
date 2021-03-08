@@ -148,6 +148,8 @@ export class PlaceOrderComponent implements OnInit {
       this.orderDetails.itemPrice = this.selectedItem[i].item.itemPrice;
       this.orderDetails.quantity = this.selectedItem[i].quantity;
       this.orderDetails.totalPrice = this.orderDetails.itemPrice * this.orderDetails.quantity;
+      this.orderDetails.vendorId = this.selectedItem[i].item.vendor.vendorId;
+      this.orderDetails.status = "Order Placed";
 
       this.orderService.addOrderDetails(this.orderId , this.orderDetails)
       .subscribe(data => {
