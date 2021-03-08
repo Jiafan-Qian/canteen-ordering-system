@@ -44,10 +44,12 @@ export class CustomerPortalComponent implements OnInit {
     this.router.navigate(['customer',this.custId,'details']);
   }
 
+  //save the coupon into database
   saveCoupon()
   {
     var coupon = new Coupon();
-    coupon.code = "FREE2020";
+    //random generate a coupon code
+    coupon.code = ""+Math.floor(Math.random()*100+1)+Math.random().toString(36).substr(2, 5);
     coupon.expireDate = new Date();
     coupon.value = 1;
     coupon.expireDate.setDate(coupon.generateDate.getDate() + 10);
