@@ -1,3 +1,5 @@
+import { Order } from "./Order";
+
 export class OrderDetails
 {
     orderDetailsId: number;
@@ -6,7 +8,10 @@ export class OrderDetails
     itemPrice: number;
     quantity: number;
     totalPrice: number;
-    orderId: string;
+    vendorId: number;
+    status: string;
+    comments: string;
+    order: Order;
 
     constructor() {};
 }
