@@ -47,4 +47,22 @@ export class OrderService {
   {
     return this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'text' });
   }
+
+  //get all orderDetails for specific vendorId
+  getAllOrderDetailsByVendorId(vendorId: number): Observable<any>
+  {
+    return this.http.get(`${this.baseUrl}/vendorid=${vendorId}/orderdetails`);
+  }
+
+  //update orderdetails by orderDetailsId
+  updateOrderDetails(id: number, value: any): Observable<any>
+  {
+    return this.http.put(`${this.baseUrl}/orderdetails/${id}`, value);
+  }
+
+  //get an order by orderId
+  getOrder(id: string): Observable<any>
+  {
+    return this.http.get(`${this.baseUrl}/${id}`);
+  }
 }
