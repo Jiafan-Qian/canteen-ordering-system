@@ -33,6 +33,15 @@ public class OrderDetails{
 	@Column(name = "total_price")
 	private double totalPrice;
 	
+	@Column(name = "vendor_id")
+	private Long vendorId;
+	
+	@Column(name = "status")
+	private String status;
+	
+	@Column(name = "comments")
+	private String comments;
+	
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "order_id")
 	private Order order;
@@ -41,7 +50,29 @@ public class OrderDetails{
 		super();
 	}
 
-	
+	public OrderDetails(Long itemId, String itemName, double itemPrice, long quantity, double totalPrice, Long vendorId,
+			String status, String comments) {
+		super();
+		this.itemId = itemId;
+		this.itemName = itemName;
+		this.itemPrice = itemPrice;
+		this.quantity = quantity;
+		this.totalPrice = totalPrice;
+		this.vendorId = vendorId;
+		this.status = status;
+		this.comments = comments;
+	}
+
+	public Long getVendorId() {
+		return vendorId;
+	}
+
+
+	public void setVendorId(Long vendorId) {
+		this.vendorId = vendorId;
+	}
+
+
 	public Long getOrderDetailsId() {
 		return orderDetailsId;
 	}
@@ -84,24 +115,6 @@ public class OrderDetails{
 		this.totalPrice = totalPrice;
 	}
 
-	public OrderDetails(long id, String itemName, double itemPrice, long quantity, double totalPrice) {
-		super();
-		this.itemId = id;
-		this.itemName = itemName;
-		this.itemPrice = itemPrice;
-		this.quantity = quantity;
-		this.totalPrice = totalPrice;
-	}
-
-	
-
-	@Override
-	public String toString() {
-		return "OrderDetails [orderDetailsId=" + orderDetailsId + ", itemId=" + itemId + ", itemName=" + itemName
-				+ ", itemPrice=" + itemPrice + ", quantity=" + quantity + ", totalPrice=" + totalPrice + ", order="
-				+ order + "]";
-	}
-
 	public Long getItemId() {
 		return itemId;
 	}
@@ -117,6 +130,38 @@ public class OrderDetails{
 	public void setOrder(Order order) {
 		this.order = order;
 	}
+
+
+
+	public String getStatus() {
+		return status;
+	}
+
+
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+
+
+	public String getComments() {
+		return comments;
+	}
+
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
+
+	@Override
+	public String toString() {
+		return "OrderDetails [orderDetailsId=" + orderDetailsId + ", itemId=" + itemId + ", itemName=" + itemName
+				+ ", itemPrice=" + itemPrice + ", quantity=" + quantity + ", totalPrice=" + totalPrice + ", vendorId="
+				+ vendorId + ", status=" + status + ", comments=" + comments + ", order=" + order + "]";
+	}
+
+	
+	
 	
 	
 	

@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.classboxes.canteenmanagementapplication.exception.ResourceNotFoundException;
 import com.classboxes.canteenmanagementapplication.model.OrderDetails;
+import com.classboxes.canteenmanagementapplication.model.Vendor;
 import com.classboxes.canteenmanagementapplication.repository.OrderDetailsRepository;
 import com.classboxes.canteenmanagementapplication.repository.OrderRepository;
 
@@ -63,5 +65,26 @@ public class OrderDetailsController {
 		
 		return ResponseEntity.ok().build();
 	}
+	
+	//get orderDetails by vendorId
+	@GetMapping("/orders/vendorid={vendorId}/orderdetails")
+	public List<OrderDetails> getOrderDetailsByVendorId(@PathVariable(value = "vendorId") Long vendorId)
+	{
+		return orderDetailsRepository.findByVendorId(vendorId);
+	}
+	
+	//update orderDetails by orderId and orderDetailsId
+	@PutMapping("/orders/orderdetails/{orderDetailsId}")
+    public ResponseEntity<OrderDetails> updateVendor(@PathVariable(value = "orderDetailsId") Long orderDetailsId,
+         @Valid @RequestBody OrderDetails orderDetails) throws ResourceNotFoundException {
+        OrderDetails newOrderDetails = orderDetailsRepository.findById(orderDetailsId)
+        .orElseThrow(() -> new ResourceNotFoundException("Vendor not found for this id :: " + orderDetailsId));
+
+        newOrderDetails.setStatus(orderDetails.getStatus());
+        newOrderDetails.setComments(orderDetails.getComments());
+        
+        final OrderDetails updatedOrerDetails = orderDetailsRepository.save(newOrderDetails);
+        return ResponseEntity.ok(updatedOrerDetails);
+    }
 
 }

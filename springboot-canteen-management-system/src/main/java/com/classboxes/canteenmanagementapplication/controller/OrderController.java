@@ -54,7 +54,6 @@ public class OrderController {
 	        order.setCustomerId(orderDetails.getCustomerId());
 	        order.setStatus(orderDetails.getStatus());
 	        order.setOrderDate(orderDetails.getOrderDate());
-	        order.setComments(orderDetails.getComments());
 	        
 	        final Order updatedOrder = orderRepository.save(order);
 	        return ResponseEntity.ok(updatedOrder);
@@ -73,6 +72,13 @@ public class OrderController {
 		}).orElseThrow(()->new ResourceNotFoundException("order not found"));
 	}
 	
-	
+	//get order by orderId
+	@GetMapping("/orders/{id}")
+    public ResponseEntity<Order> getOrderById(@PathVariable(value = "id") String orderId)
+        throws ResourceNotFoundException {
+        Order order = orderRepository.findById(orderId)
+          .orElseThrow(() -> new ResourceNotFoundException("Customer not found for this id :: " + orderId));
+        return ResponseEntity.ok().body(order);
+    }
 
 }

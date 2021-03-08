@@ -12,6 +12,7 @@ import com.classboxes.canteenmanagementapplication.model.OrderDetails;
 public interface OrderDetailsRepository extends JpaRepository<OrderDetails, Long>{
 	
 	List<OrderDetails> findByOrder_OrderId(String orderId);
+	List<OrderDetails> findByVendorId(Long vendorId);
 	Optional<OrderDetails> findByOrderDetailsIdAndOrder_OrderId(Long orderDetailsId, String orderId);
 
 }
